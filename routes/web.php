@@ -1,6 +1,13 @@
 <?php
 
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BasketController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +25,18 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 }); */
 
-Route::get('/',[HomepageController::class,'index']);
+Route::get('/',[HomepageController::class,'index'])->name('homepage');
+Route::get('/category/{slug_categoryname}',[CategoryController::class,'index'])->name('category');
+Route::get('/product/{slug_productname}',[ProductController::class,'index'])->name('product');
+Route::get('/basket',[BasketCOntroller::class,'index'])->name('basket');
+Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+Route::get('/orders',[OrderController::class,'index'])->name('orders');
+Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
+
+ROute::group(['prefix'=>'user'],function(){
+    Route::get('/signin',[UserController::class,'sign_in'])->name('user.signin');
+    Route::get('/signup',[UserController::class,'sign_up'])->name('user.signup');
+});
 
 
 Route::get('/test',function(){
@@ -42,6 +60,3 @@ Route::get('company',function(){
     return redirect()->route('filansehy',['ad'=>'alma','say'=>'5','qiymet'=>5]);
 });
 
-Route::view('/category','category');
-Route::view('/product','product');
-Route::view('/basket','basket');
