@@ -27,8 +27,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomepageController::class,'index'])->name('homepage');
 Route::get('/category/{slug_category}',[CategoryController::class,'index'])->name('category');
-Route::get('/product/{slug_productname}',[ProductController::class,'index'])->name('product');
-Route::get('/basket',[BasketCOntroller::class,'index'])->name('basket');
+Route::get('/product/{slug_product}',[ProductController::class,'index'])->name('product');
+Route::get('/basket',[BasketController::class,'index'])->name('basket');
 Route::get('/payment',[PaymentController::class,'index'])->name('payment');
 Route::get('/orders',[OrderController::class,'index'])->name('orders');
 Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');

@@ -16,7 +16,11 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+        DB::statement("SET FOREIGN_KEY_CHECKS=0;");
         Category::truncate();
+        DB::statement("SET FOREIGN_KEY_CHECKS=1;");
+
+        
         $id = Category::create(['name'=>'Electronic','slug'=>'electronic'])->id;
         Category::create(['name'=>'Computer/Tablet','slug'=>'computer-tablet','up_id' => $id]);
         Category::create(['name'=>'Phone','slug'=>'phone','up_id' => $id]);
