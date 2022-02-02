@@ -26,37 +26,23 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 Route::get('/',[HomepageController::class,'index'])->name('homepage');
+
 Route::get('/category/{slug_category}',[CategoryController::class,'index'])->name('category');
+
 Route::get('/product/{slug_product}',[ProductController::class,'index'])->name('product');
+Route::post('/search',[ProductController::class,'search'])->name('search_product');
+
 Route::get('/basket',[BasketController::class,'index'])->name('basket');
+
 Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+
 Route::get('/orders',[OrderController::class,'index'])->name('orders');
 Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
 
-ROute::group(['prefix'=>'user'],function(){
+
+Route::group(['prefix'=>'user'],function(){
     Route::get('/signin',[UserController::class,'sign_in'])->name('user.signin');
     Route::get('/signup',[UserController::class,'sign_up'])->name('user.signup');
 });
 
-
-Route::get('/test',function(){
-    return 'ecommerce';
-});
-
-Route::get('/api/v1/merheba',function(){
-    return ['name'=>'Tunar','surname'=>'M'];
-});
-
-Route::get('/products/{ad}/{say}/{qiymet}',function($productname,$productsay,$productcost){
-    // return 'mehsulun adi ' . $product;
-    return ['mehsulun adi'=>$productname,
-            'mehsulun sayi'=>$productsay,
-            'mehsulun qiymeti'=>$productcost.' manat'
-        ];
-})->name('filansehy');
-
-
-Route::get('company',function(){
-    return redirect()->route('filansehy',['ad'=>'alma','say'=>'5','qiymet'=>5]);
-});
 

@@ -14,4 +14,11 @@ class ProductController extends Controller
         // dd($product);
         return view('product',compact('product','categories'));
     }
+
+    public function search(){
+        $search = request()->input('search'); 
+        $products = Product::where('name', 'like',"%$search%")->orWhere('desc','like',"%$search%")->get();
+        request()->flash();
+        return view('search',compact('products'));
+    }
 }
