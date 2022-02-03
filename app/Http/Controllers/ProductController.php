@@ -17,7 +17,11 @@ class ProductController extends Controller
 
     public function search(){
         $search = request()->input('search'); 
-        $products = Product::where('name', 'like',"%$search%")->orWhere('desc','like',"%$search%")->get();
+        $products = Product::where('name', 'like',"%$search%")
+        ->orWhere('desc','like',"%$search%")
+        ->orderBy('price','desc')
+        ->simplePaginate(6);
+        
         request()->flash();
         return view('search',compact('products'));
     }

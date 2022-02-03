@@ -30,7 +30,7 @@ Route::get('/',[HomepageController::class,'index'])->name('homepage');
 Route::get('/category/{slug_category}',[CategoryController::class,'index'])->name('category');
 
 Route::get('/product/{slug_product}',[ProductController::class,'index'])->name('product');
-Route::post('/search',[ProductController::class,'search'])->name('search_product');
+Route::get('/search',[ProductController::class,'search'])->name('search_product');
 
 Route::get('/basket',[BasketController::class,'index'])->name('basket');
 

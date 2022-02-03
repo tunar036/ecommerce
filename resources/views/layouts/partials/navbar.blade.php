@@ -13,8 +13,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" action="{{route('search_product')}}" method="POST">
-                    @csrf
+                <form class="navbar-form navbar-left" action="{{route('search_product')}}" method="get">
                     <div class="input-group">
                         <input type="text" name="search" id="navbar-search" class="form-control" placeholder="Axtar" value="{{ old('search')}}">
                         <span class="input-group-btn">
