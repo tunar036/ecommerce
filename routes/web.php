@@ -47,3 +47,7 @@ Route::group(['prefix'=>'user'],function(){
 });
 
 
+Route::get('/test/email',function(){
+    $user = \App\Models\User::find(4);
+    return new App\Mail\UserRegistrationMail($user);
+});

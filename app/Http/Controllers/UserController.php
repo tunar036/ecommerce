@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserRegistrationMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 
@@ -30,6 +32,7 @@ class UserController extends Controller
             'activation_key'=> Str::random(60),
             'is_active' => 0,
         ]);
+        Mail::to(request('email'))->send(new UserRegistrationMail($user));
         auth()->login($user);
         return redirect()->route('homepage');
     }
