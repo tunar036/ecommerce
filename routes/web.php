@@ -44,10 +44,11 @@ Route::group(['prefix'=>'user'],function(){
     Route::get('/signin',[UserController::class,'sign_in_form'])->name('user.signin');
     Route::get('/signup',[UserController::class,'sign_up_form'])->name('user.signup');
     Route::post('/signup',[UserController::class,'sign_up']);
+    Route::get('/activate/{key}',[UserController::class,'activate'])->name('activate');
 });
 
 
 Route::get('/test/email',function(){
-    $user = \App\Models\User::find(4);
+    $user = \App\Models\User::find(4     );
     return new App\Mail\UserRegistrationMail($user);
 });

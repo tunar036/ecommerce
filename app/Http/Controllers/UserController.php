@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+use function PHPUnit\Framework\isNull;
 
 class UserController extends Controller
 {
@@ -35,5 +36,21 @@ class UserController extends Controller
         Mail::to(request('email'))->send(new UserRegistrationMail($user));
         auth()->login($user);
         return redirect()->route('homepage');
+    }
+
+    public function activate($key){
+        $user = User::where('activation_key',$key)->first();
+        if(isNull($user)){
+            $user->activation_key = null;
+            $user->is_active = 1;
+            $user->save();
+            return redirect()->to('/')
+            ->with('message','İstifadəçi qeydiyyatınız aktivləşdirildi')
+            ->with('message_type','success');
+        }else{
+            return redirect()->to('/')
+            ->with('message','İstifadəçi qeydiyyatınız aktivləşdirilmədi.')
+            ->with('message_type','warning');
+        }
     }
 }
