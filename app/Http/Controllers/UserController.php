@@ -15,38 +15,49 @@ use function PHPUnit\Framework\isNull;
 
 class UserController extends Controller
 {
-    public function sign_in_form(){
-        return view('user.sign_in');
+    public function login_form(){
+        return view('user.login');
     }
-    public function sign_in(){
+
+    public function login(){
         // dd(request()->all());
         $this->validate(request(),[
             'email'=> 'required|email',
             'password'=> 'required'
         ]);
 
-        if(auth()->attempt(['email' => request('email'),'password'=>request('password'),'is_active'=>'1'],request()->has('remember_me'))){
+        if(auth()->attempt(['email' => request('email'),'password'=>request('password')],request()->has('remember_me'))){
             request()->session()->regenerate();
             return redirect()->intended('/');
-        }elseif(auth()->attempt(['email' => request('email'),'password'=>request('password'),'is_active'=>'0'])){
-            // dd(request()->all());
-            User::where('email',request('email'))
-            ->update([
-                'activation_key'=> Str::random(60),
-                'activation_key_send_date' => Carbon::now()
-            ]);
-            $user = User::where('email',request('email'))->first();
-            Mail::to(request('email'))->send(new UserRegistrationMail($user));
-            auth()->login($user);
-            return redirect()->route('homepage')
-            ->with('message','İstifadəçi qeydiyyatınızı emailinizə gələn mesaj vasitəsi ilə aktivləşdirin!')
-            ->with('message_type','warning');;
-
         }else{
             $errors = ['email'=>'Email və ya şifrə düzgün deyil !'];
             return back()->withErrors($errors);
         }
+
+        // if(auth()->attempt(['email' => request('email'),'password'=>request('password'),'is_active'=>'1'],request()->has('remember_me'))){
+        //     request()->session()->regenerate();
+        //     return redirect()->intended('/');
+        // }elseif(auth()->attempt(['email' => request('email'),'password'=>request('password'),'is_active'=>'0'])){
+        //     // dd(request()->all());
+        //     User::where('email',request('email'))
+        //     ->update([
+        //         'activation_key'=> Str::random(60),
+        //         'activation_key_send_date' => Carbon::now()
+        //     ]);
+        //     $user = User::where('email',request('email'))->first();
+        //     Mail::to(request('email'))->send(new UserRegistrationMail($user));
+        //     auth()->login($user);
+        //     return redirect()->route('homepage')
+        //     ->with('message','İstifadəçi qeydiyyatınızı emailinizə gələn mesaj vasitəsi ilə aktivləşdirin!')
+        //     ->with('message_type','warning');
+
+        // }else{
+        //     $errors = ['email'=>'Email və ya şifrə düzgün deyil !'];
+        //     return back()->withErrors($errors);
+        // }
     }
+
+
     public function sign_up_form(){
         return view('user.sign_up');
     }
@@ -72,6 +83,8 @@ class UserController extends Controller
         ->with('message_type','warning');
     }
 
+
+
     public function activate($key){
         $user = User::where('activation_key',$key)->first();
         if(!is_null($user)){
@@ -94,6 +107,24 @@ class UserController extends Controller
             ->with('message_type','warning');
         }
     }
+
+
+    public function activate_user ($id){
+        User::where('id',$id)
+        ->update([
+            'activation_key'=> Str::random(60),
+            'activation_key_send_date' => Carbon::now()
+        ]);
+        
+        $user = User::where('id',$id)->first();
+        // dd($user);
+        Mail::to($user->email)->send(new UserRegistrationMail($user));
+        return redirect()->route('homepage')
+        ->with('message','Təsdiq mesajı emailinizə göndərildi')
+        ->with('message_type','warning');
+    }
+
+    
 
     public function logout(){
         auth()->logout();

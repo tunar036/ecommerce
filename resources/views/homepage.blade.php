@@ -3,7 +3,17 @@
 @section('content')
 
     @include('layouts.partials.alert')
+    @if(Auth::user() and Auth::user()->is_active == 0)
+    <div class="container">
+        <div class="alert-danger panel-heading">
 
+                        Hesabınızı təsdiqləmək üçün emailinizə təsdiq mesajı
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('activation').submit()">GÖNDƏRİN</a>
+                                <form id="activation" action="{{route('activate_user',Auth::user()->id)}}" method="POST" style="display: none;">
+                                    @csrf
+        </div>                        </form>
+    </div>
+    @endif
     <div class="container">
         <div class="row">
             <div class="col-md-3">

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Sign In')
+@section('title','Login')
 @section('content')
 <div class="container">
         <div class="row">
@@ -8,7 +8,7 @@
                     <div class="panel-heading">Daxil ol</div>
                     <div class="panel-body">
                         @include('layouts.partials.errors')
-                        <form class="form-horizontal" role="form" method="POST" action="{{route('user.signin')}}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{route('user.login')}}">
                             @csrf
                             <div class="form-group">
                                 <label for="email" class="col-md-4 control-label">Email</label>

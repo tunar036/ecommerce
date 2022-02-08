@@ -26,7 +26,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><i class="fa fa-shopping-cart"></i> Səbət <span class="badge badge-theme">5</span></a></li>
                    
-                    <li><a href="{{route('user.signin')}}">Daxil ol</a></li>
+                    <li><a href="{{route('user.login')}}">Daxil ol</a></li>
                     <li><a href="{{route('user.signup')}}">Qeydiyyat</a></li>
                     
                     <li class="dropdown">

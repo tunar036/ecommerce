@@ -31,8 +31,8 @@ Route::get('/category/{slug_category}',[CategoryController::class,'index'])->nam
 
 Route::get('/product/{slug_product}',[ProductController::class,'index'])->name('product');
 Route::get('/search',[ProductController::class,'search'])->name('search_product');
+    Route::get('/basket',[BasketController::class,'index'])->name('basket');
 
-Route::get('/basket',[BasketController::class,'index'])->name('basket');
 
 Route::get('/payment',[PaymentController::class,'index'])->name('payment');
 
@@ -41,15 +41,15 @@ Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
 
 
 Route::group(['prefix'=>'user'],function(){
-    Route::get('/signin',[UserController::class,'sign_in_form'])->name('user.signin');
-    Route::post('/signin',[UserController::class,'sign_in']);
+    Route::get('/login',[UserController::class,'login_form'])->name('user.login');
+    Route::post('/login',[UserController::class,'login']);
     Route::get('/signup',[UserController::class,'sign_up_form'])->name('user.signup');
     Route::post('/signup',[UserController::class,'sign_up']);
     Route::get('/activate/{key}',[UserController::class,'activate'])->name('activate');
     Route::post('/logout',[UserController::class,'logout'])->name('user.logout');
-
 });
 
+Route::post('/activate/{id}',[UserController::class,'activate_user'])->name('activate_user');
 
 Route::get('/test/email',function(){
     $user = \App\Models\User::find(4     );
