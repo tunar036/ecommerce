@@ -34,10 +34,11 @@ Route::get('/search',[ProductController::class,'search'])->name('search_product'
     Route::get('/basket',[BasketController::class,'index'])->name('basket');
 
 
-Route::get('/payment',[PaymentController::class,'index'])->name('payment');
-
-Route::get('/orders',[OrderController::class,'index'])->name('orders');
-Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+    Route::get('/orders',[OrderController::class,'index'])->name('orders');
+    Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
+});
 
 
 Route::group(['prefix'=>'user'],function(){

@@ -15,6 +15,11 @@ use function PHPUnit\Framework\isNull;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
     public function login_form(){
         return view('user.login');
     }
@@ -57,10 +62,10 @@ class UserController extends Controller
         // }
     }
 
-
     public function sign_up_form(){
         return view('user.sign_up');
     }
+
     public function sign_up (){
         $this->validate(request(),[
             'name'=> 'required|min:5|max:60',
@@ -82,8 +87,6 @@ class UserController extends Controller
         ->with('message','İstifadəçi qeydiyyatınızı emailinizə gələn mesaj vasitəsi ilə aktivləşdirin!')
         ->with('message_type','warning');
     }
-
-
 
     public function activate($key){
         $user = User::where('activation_key',$key)->first();
@@ -108,14 +111,13 @@ class UserController extends Controller
         }
     }
 
-
     public function activate_user ($id){
         User::where('id',$id)
         ->update([
             'activation_key'=> Str::random(60),
             'activation_key_send_date' => Carbon::now()
         ]);
-        
+
         $user = User::where('id',$id)->first();
         // dd($user);
         Mail::to($user->email)->send(new UserRegistrationMail($user));
@@ -123,8 +125,6 @@ class UserController extends Controller
         ->with('message','Təsdiq mesajı emailinizə göndərildi')
         ->with('message_type','warning');
     }
-
-    
 
     public function logout(){
         auth()->logout();
