@@ -20,6 +20,7 @@ class CreateUserTable extends Migration
             $table->string('password',60);
             $table->string('activation_key',60)->nullable();
             $table->boolean('is_active')->default(0);
+            $table->timestamp('activation_key_send_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

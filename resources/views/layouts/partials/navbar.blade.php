@@ -24,7 +24,7 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i> Sepet <span class="badge badge-theme">5</span></a></li>
+                    <li><a href="#"><i class="fa fa-shopping-cart"></i> Səbət <span class="badge badge-theme">5</span></a></li>
                    
                     <li><a href="{{route('user.signin')}}">Daxil ol</a></li>
                     <li><a href="{{route('user.signup')}}">Qeydiyyat</a></li>
@@ -32,9 +32,14 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Profil <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Siparişlerim</a></li>
+                            <li><a href="#">Sifarişlərim</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Çıkış</a></li>
+                            <li>
+                                <a href="#" onclick="event.preventDefault(); document.getElementById('logout_form').submit()">Çıxış</a>
+                                <form id="logout_form" action="{{route('user.logout')}}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
                     </li>
                 

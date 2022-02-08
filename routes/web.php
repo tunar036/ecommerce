@@ -42,9 +42,12 @@ Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
 
 Route::group(['prefix'=>'user'],function(){
     Route::get('/signin',[UserController::class,'sign_in_form'])->name('user.signin');
+    Route::post('/signin',[UserController::class,'sign_in']);
     Route::get('/signup',[UserController::class,'sign_up_form'])->name('user.signup');
     Route::post('/signup',[UserController::class,'sign_up']);
     Route::get('/activate/{key}',[UserController::class,'activate'])->name('activate');
+    Route::post('/logout',[UserController::class,'logout'])->name('user.logout');
+
 });
 
 
