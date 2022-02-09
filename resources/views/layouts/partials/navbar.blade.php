@@ -24,7 +24,7 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{route('basket')}}"><i class="fa fa-shopping-cart"></i> Səbət <span class="badge badge-theme">5</span></a></li>
+                        <li><a href="{{route('basket')}}"><i class="fa fa-shopping-cart"></i> Səbət <span class="badge badge-theme">{{Cart::count()}}</span></a></li>
                     @guest
                         <li><a href="{{route('user.login')}}">Daxil ol</a></li>
                         <li><a href="{{route('user.signup')}}">Qeydiyyat</a></li>
