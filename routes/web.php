@@ -31,7 +31,11 @@ Route::get('/category/{slug_category}',[CategoryController::class,'index'])->nam
 
 Route::get('/product/{slug_product}',[ProductController::class,'index'])->name('product');
 Route::get('/search',[ProductController::class,'search'])->name('search_product');
-    Route::get('/basket',[BasketController::class,'index'])->name('basket');
+
+Route::group(['prefix'=>'basket'],function(){
+    Route::get('/',[BasketController::class,'index'])->name('basket');
+    Route::post('/add',[BasketController::class,'add'])->name('add.basket');
+});
 
 
 Route::group(['middleware'=>'auth'],function(){
