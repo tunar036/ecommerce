@@ -33,9 +33,9 @@
                     </td>
                     <td>{{$productCartItem->price}} manat</td>
                     <td>
-                        <a href="#" class="btn btn-xs btn-default">-</a>
+                        <a href="#" class="btn btn-xs btn-default product-piece-reduce" data-id="{{$productCartItem->rowId}}" data-piece="{{$productCartItem->qty-1}}">-</a>
                         <span style="padding: 10px 20px">{{$productCartItem->qty}}</span>
-                        <a href="#" class="btn btn-xs btn-default">+</a>
+                        <a href="#" class="btn btn-xs btn-default product-piece-increase" data-id="{{$productCartItem->rowId}}" data-piece="{{$productCartItem->qty+1}}">+</a>
                     </td>
                     <td class="text-right">
                         {{$productCartItem->subtotal}} manat
@@ -66,4 +66,29 @@
             @endif
         </div>
     </div>
+@endsection
+
+@section('footer')
+<script>
+    $(function () {
+        $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+        $('.product-piece-reduce, .product-piece-increase').on('click',function(){
+            var id = $(this).attr('data-id');
+            var piece = $(this).attr('data-piece');
+            $.ajax({
+                type: 'PATCH',
+                url: "{{ url('basket/update')}}/" + id,
+                data: {piece: piece},
+                success: function(){
+                    window.location.href = "{{route('basket')}}";
+                }
+            })
+        })
+
+    })
+</script>
 @endsection

@@ -37,6 +37,7 @@ Route::group(['prefix'=>'basket'],function(){
     Route::post('/add',[BasketController::class,'add'])->name('add.basket');
     Route::delete('/delete/{rowid}',[BasketController::class,'delete'])->name('delete.basket');
     Route::delete('/delete',[BasketController::class,'deleteAll'])->name('empty.basket');
+    Route::patch('/update/{rowid}',[BasketController::class,'update'])->name('update.basket');
 });
 
 

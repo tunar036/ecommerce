@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart ;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 // use Gloudemans\Shoppingcart\Contracts\Buyable;
 
 
@@ -42,4 +44,22 @@ class BasketController extends Controller
         ->with('message_type','success')
         ->with('message','Səbət boşaldıldı.');
     }
+
+    public function update ($rowid){
+        $validator = Validator::make(request()->all(),[
+            'piece'=> 'required|numeric|between:1,5'
+        ]);
+        if ($validator->fails()) {
+            session()->flash('message_type','danger');
+            session()->flash('message','Eded deyeri 1 ve 5 arasinda olmalidir');
+            return response()->json(['success'=>false]);
+
+        }
+            Cart::update($rowid,request('piece'));
+
+            session()->flash('message_type','success');
+            session()->flash('message','Səbət yenilendi.');
+            
+            return response()->json(['success'=>true]);
+        }
 }
