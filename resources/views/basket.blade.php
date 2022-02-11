@@ -25,6 +25,11 @@
                         <a href="{{route('product',$productCartItem->options->slug)}}">
                             {{$productCartItem->name}}
                         </a>
+                        <form action="{{route('delete.basket',$productCartItem->rowId)}}" method="POST">
+                            @csrf
+                            {{method_field('DELETE')}}
+                            <input type="submit" class="btn btn-danger btn-xs" value="Səbətdən sil">
+                        </form>
                     </td>
                     <td>{{$productCartItem->price}} manat</td>
                     <td>
@@ -50,7 +55,11 @@
                     <td class="text-right">{{Cart::total()}} manat</td>
                 </tr>
             </table>
-            <a href="#" class="btn btn-info pull-left">Sepeti Boşalt</a>
+            <form action="{{route('empty.basket')}}" method="POST">
+                @csrf
+                {{ method_field('DELETE')}}
+                <input type="submit" class="btn btn-info pull-left" value="Səbəti boşalt">
+            </form>
             <a href="#" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
             @else
                 <p>Səbətinizdə məhsul yoxdur !</p>

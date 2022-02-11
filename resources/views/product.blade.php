@@ -32,7 +32,7 @@
                     <form action="{{route('add.basket')}}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{$product->id}}">
-                        <input type="submit" class="btn btn-theme" value="Add to Basket">
+                        <input type="submit" class="btn btn-theme" value="Səbətə əlavə et">
                     </form>
                 </div>
             </div>

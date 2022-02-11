@@ -35,6 +35,8 @@ Route::get('/search',[ProductController::class,'search'])->name('search_product'
 Route::group(['prefix'=>'basket'],function(){
     Route::get('/',[BasketController::class,'index'])->name('basket');
     Route::post('/add',[BasketController::class,'add'])->name('add.basket');
+    Route::delete('/delete/{rowid}',[BasketController::class,'delete'])->name('delete.basket');
+    Route::delete('/delete',[BasketController::class,'deleteAll'])->name('empty.basket');
 });
 
 

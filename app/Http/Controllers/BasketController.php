@@ -26,6 +26,20 @@ class BasketController extends Controller
 
         return redirect()->route('basket')
             ->with('message_type','success')
-            ->with('message','Mehsul sebete elave olundu');
+            ->with('message','Mehsul sebete elave olundu.');
+    }
+
+    public function delete($rowid){
+        Cart::remove($rowid);
+        return redirect()->route('basket')
+        ->with('message_type','success')
+        ->with('message','Mehsul sebetden silindi.');
+    }
+
+    public function deleteAll(){
+        Cart::destroy();
+        return redirect()->route('basket')
+        ->with('message_type','success')
+        ->with('message','Səbət boşaldıldı.');
     }
 }
