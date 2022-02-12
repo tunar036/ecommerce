@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Basket;
+use App\Models\BasketProduct;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart ;
 use Illuminate\Http\Request;
@@ -23,8 +25,23 @@ class BasketController extends Controller
 
     public function add (){
         $product = Product::find(request('id'));
-        // dd($product->slug);
-        Cart::add($product->id,$product->name,1,$product->price,['slug'=>$product->slug]);
+        $cartItem = Cart::add($product->id,$product->name,1,$product->price,['slug'=>$product->slug]);
+
+        if(auth()->check()){
+            $activeBasketId = session('activeBasketId');
+            if (!isset($activeBasketId)) {
+                $activeBasket = Basket::create([
+                    'user_id' => auth()->id()
+                ]);
+                $activeBasketId = $activeBasket->id;
+                session()->put('activeBasketId',$activeBasketId);
+            }
+
+            BasketProduct::updateOrCreate(
+                ['basket_id'=>$activeBasketId,'product_id'=>$product->id],
+                ['pieces'=>$cartItem->qty,'price'=>$product->price,'status'=>'pending']
+            );
+        }
 
         return redirect()->route('basket')
             ->with('message_type','success')
