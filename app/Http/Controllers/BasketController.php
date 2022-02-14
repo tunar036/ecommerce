@@ -62,6 +62,10 @@ class BasketController extends Controller
     }
 
     public function deleteAll(){
+        if(auth()->check()){
+            $activeBasketId = session('activeBasketId');
+            BasketProduct::where('basket_id',$activeBasketId)->delete();
+        }
         Cart::destroy();
         return redirect()->route('basket')
         ->with('message_type','success')
