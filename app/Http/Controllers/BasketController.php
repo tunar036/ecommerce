@@ -48,7 +48,13 @@ class BasketController extends Controller
             ->with('message','Mehsul sebete elave olundu.');
     }
 
+    
     public function delete($rowid){
+        if(auth()->check()){
+            $activeBasketId = session('activeBasketId');
+            $cartItem = Cart::get($rowid);
+            BasketProduct::where('basket_id',$activeBasketId)->where('product_id',$cartItem->id)->delete();
+        }
         Cart::remove($rowid);
         return redirect()->route('basket')
         ->with('message_type','success')
