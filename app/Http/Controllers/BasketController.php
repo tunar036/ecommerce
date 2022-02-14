@@ -74,13 +74,23 @@ class BasketController extends Controller
 
     public function update ($rowid){
         $validator = Validator::make(request()->all(),[
-            'piece'=> 'required|numeric|between:1,5'
+            'piece'=> 'required|numeric|between:0,5'
         ]);
         if ($validator->fails()) {
             session()->flash('message_type','danger');
             session()->flash('message','Eded deyeri 1 ve 5 arasinda olmalidir');
             return response()->json(['success'=>false]);
 
+        }
+
+        if(auth()->check()){
+            $activeBasketId = session('activeBasketId');
+            $cartItem = Cart::get($rowid);
+            if(request('piece') == 0)
+                BasketProduct::where('basket_id',$activeBasketId)->where('product_id',$cartItem->id)->delete();
+            else
+                BasketProduct::where('basket_id',$activeBasketId)->where('product_id',$cartItem->id)
+                ->update(['pieces'=>request('piece')]);
         }
             Cart::update($rowid,request('piece'));
 
