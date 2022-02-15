@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Mail\UserRegistrationMail;
+use App\Models\Basket;
+use App\Models\BasketProduct;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Gloudemans\Shoppingcart\Facades\Cart ;
+
 
 use function GuzzleHttp\Promise\all;
 use function PHPUnit\Framework\isNull;
@@ -17,7 +21,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout','activate','activate_user']);
     }
 
     public function login_form(){
@@ -33,6 +37,25 @@ class UserController extends Controller
 
         if(auth()->attempt(['email' => request('email'),'password'=>request('password')],request()->has('remember_me'))){
             request()->session()->regenerate();
+
+            $activeBasketId = Basket::firstOrCreate(['user_id'=>auth()->id()])->id;
+            session()->put('activeBasketId',$activeBasketId);
+              if (Cart::count()>0) 
+              {
+                  foreach (Cart::content() as $cartItem) 
+                  {
+                      BasketProduct::updateOrCreate(
+                          ['basket_id' => $activeBasketId,'product_id' =>$cartItem->id],
+                          ['pieces'=>$cartItem->qty,'price'=>$cartItem->price,'status'=>'pending']
+                      );
+                  }
+              }
+              Cart::destroy();
+              $basketProducts = BasketProduct::where('basket_id',$activeBasketId)->get();
+              foreach ($basketProducts as $basketProduct) {
+                  Cart::add($basketProduct->product->id,$basketProduct->product->name,$basketProduct->pieces,$basketProduct->price,['slug'=>$basketProduct->product->slug]);
+              }
+            // dd($activeBasketId);
             return redirect()->intended('/');
         }else{
             $errors = ['email'=>'Email və ya şifrə düzgün deyil !'];

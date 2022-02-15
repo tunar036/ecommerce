@@ -13,5 +13,9 @@ class BasketProduct extends Model
     protected $table = 'basket_product';
     protected $guarded = [];
     
+    public function product (){
+        return $this->belongsTo(Product::class);
+    }
+
     use HasFactory;
 }
