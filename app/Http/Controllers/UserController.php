@@ -6,6 +6,7 @@ use App\Mail\UserRegistrationMail;
 use App\Models\Basket;
 use App\Models\BasketProduct;
 use App\Models\User;
+use App\Models\UserDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -104,6 +105,8 @@ class UserController extends Controller
             'activation_key_send_date' => Carbon::now(),
             'is_active' => 0,
         ]);
+
+        $user->user_detail()->save(new UserDetail());
         Mail::to(request('email'))->send(new UserRegistrationMail($user));
         auth()->login($user);
         return redirect()->route('homepage')

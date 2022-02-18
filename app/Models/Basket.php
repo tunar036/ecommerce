@@ -11,5 +11,9 @@ class Basket extends Model
     use SoftDeletes;
     protected $table = 'basket';
     protected $guarded= [];
+
+    public function order(){
+        return $this->hasOne(Order::class);
+    }
     use HasFactory;
 }

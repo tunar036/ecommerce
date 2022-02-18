@@ -40,9 +40,12 @@ Route::group(['prefix'=>'basket'],function(){
     Route::patch('/update/{rowid}',[BasketController::class,'update'])->name('update.basket');
 });
 
+Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+Route::post('/payment',[PaymentController::class,'pay'])->name('pay');
+
+
 
 Route::group(['middleware'=>'auth'],function(){
-    Route::get('/payment',[PaymentController::class,'index'])->name('payment');
     Route::get('/orders',[OrderController::class,'index'])->name('orders');
     Route::get('/orders/{id}',[OrderController::class,'detail'])->name('order');
 });

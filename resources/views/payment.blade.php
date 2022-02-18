@@ -1,18 +1,20 @@
 @extends('layouts.master')
 @section('title','Payment')
 @section('content')
-    <div class="container">
+    <div class="container">   
         <div class="bg-content">
-            <h2>Ödeme</h2>
+            <form action="{{route('pay')}}" method="POST">
+                @csrf
+            <h2>Ödəniş</h2>
             <div class="row">
                 <div class="col-md-5">
-                    <h3>Ödeme Bilgileri</h3>
+                    <h3>Ödəniş məlumatı</h3>
                     <div class="form-group">
-                        <label for="kartno">Kredi Kartı Numarası</label>
-                        <input type="text" class="form-control kredikarti" id="kartno" name="cardnumber" style="font-size:20px;" required>
+                        <label for="kartno">Kredit kartı nömrəsi</label>
+                        <input type="text" class="form-control kredikarti" id="cardnumber" name="cardnumber" style="font-size:20px;" required>
                     </div>
                     <div class="form-group">
-                        <label for="cardexpiredatemonth">Son Kullanma Tarihi</label>
+                        <label for="cardexpiredatemonth">İstifadə müddəti</label>
                         <div class="row">
                             <div class="col-md-6">
                                 Ay
@@ -21,15 +23,15 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                Yıl
-                                <select name="cardexpiredateyear" class="form-control" required>
+                                il
+                                <select id="cardexpiredateyear" name="cardexpiredateyear" class="form-control" required>
                                     <option>2017</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="cardcvv2">CVV (Güvenlik Numarası)</label>
+                        <label for="cardcvv2">CVV (Təhlükəsizlik Nömrəsi)</label>
                         <div class="row">
                             <div class="col-md-4">
                                 <input type="text" class="form-control kredikarti_cvv" name="cardcvv2" id="cardcvv2" required>
@@ -39,33 +41,45 @@
                     <form>
                         <div class="form-group">
                             <div class="checkbox">
-                                <label><input type="checkbox" checked> Ön bilgilendirme formunu okudum ve kabul ediyorum.</label>
+                                <label><input type="checkbox" checked> ilkin məlumat formasını oxudum və qəbul edirəm.</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
-                                <label><input type="checkbox" checked> Mesafeli satış sözleşmesini okudum ve kabul ediyorum.</label>
+                                <label><input type="checkbox" checked> Məsafədən satış müqaviləsini oxudum və qəbul edirəm.</label>
                             </div>
                         </div>
                     </form>
-                    <button type="submit" class="btn btn-success btn-lg">Ödeme Yap</button>
+                    <button type="submit" class="btn btn-success btn-lg">Ödəniş et</button>
                 </div>
                 <div class="col-md-7">
-                    <h4>Ödenecek Tutar</h4>
-                    <span class="price">18.92 <small>TL</small></span>
+                    <h4>Ödəniləcək məbləğ</h4>
+                    <span class="price">{{Cart::total()}} <small>manat</small></span>
 
-                    <h4>Kargo</h4>
-                    <span class="price">0 <small>TL</small></span>
-
-                    <h4>Teslimat Bilgileri</h4>
-                    <p>Teslimat Adresi </p>
-                    <a href="#">Değiştir</a>
-
-                    <h4>Kargo</h4>
-                    <p>Ücretsiz
+                    <h4>Əlaqə və faktura məlumatları</h4>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="name">Ad Soyad</label>
+                                <input type="text" class="form-control" name="name" id="name" value="{{Auth::user()->name}}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="name">Ünvan</label>
+                                <input type="text" class="form-control" name="address" id="address" value="{{$user_detail->address}}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="phone">Telefon</label>
+                                <input type="text" class="form-control phone" name="phone" id="phone" value="{{$user_detail->phone}}" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            </form>
         </div>
     </div>
 @endsection
