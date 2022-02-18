@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BasketProduct extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $table = 'basket_product';
     protected $guarded = [];
@@ -17,5 +18,5 @@ class BasketProduct extends Model
         return $this->belongsTo(Product::class);
     }
 
-    use HasFactory;
+    
 }

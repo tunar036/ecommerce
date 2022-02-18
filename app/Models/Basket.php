@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\returnSelf;
+
 class Basket extends Model
 {
     use SoftDeletes;
@@ -16,6 +18,14 @@ class Basket extends Model
     public function order(){
         return $this->hasOne(Order::class);
     }
+
+    public function basket_product(){
+        return $this->hasMany(BasketProduct::class);
+    }
+
+    // public function user (){
+    //     return $this->belongsTo(User::class);
+    // }
     public static function activeBasketId(){
         $active_basket = DB::table('basket as b')
         ->leftJoin('orders as o','o.basket_id','=','b.id')
@@ -27,5 +37,12 @@ class Basket extends Model
 
         if(!is_null($active_basket)) return $active_basket->id;
     }
-    use HasFactory;
+
+
+
+    public function getBasketProductPiecesAttribute(){
+        return DB::table('basket_product')->where('basket_id',$this->id)->sum('pieces');
+    }
+
+   
 }

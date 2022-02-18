@@ -15,5 +15,4 @@ class Order extends Model
     public function basket (){
         return $this->belongsTo(Basket::class);
     }
-    use HasFactory;
 }
