@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart ;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,12 +11,18 @@ use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
 {
     public function index(){
+        $isActive = User::where('id',auth()->id())->first()->is_active;
+        // return User::where('id',auth()->id())->where('is_active',0)->get();
         if (!auth()->check())
         {
             return redirect()->route('user.login')
             ->with('message','Ödəniş əməliyyatı üçün qeydiyyatdan keçməyiniz vacibdir!')
             ->with('message_type','info');
         }elseif (count(Cart::content())==0) {
+            return redirect()->route('homepage')
+            ->with('message','Ödəniş əməliyyatı üçün səbətinizdə məhsul olmalıdır!')
+            ->with('message_type','info');
+        }elseif($isActive == 0){
             return redirect()->route('homepage')
             ->with('message','Ödəniş əməliyyatı üçün səbətinizdə məhsul olmalıdır!')
             ->with('message_type','info');

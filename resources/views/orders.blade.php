@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
         <div class="bg-content">
-            <h2>Siparişler</h2>
+            <h2>Sifarişlər</h2>
             @if(count($orders) == 0)
-            <p>Henüz siparişiniz yok</p>
+            <p>Hələ heç bir sifarişiniz yoxdur</p>
             @else
             <table class="table table-bordererd table-hover">
                 <tr>

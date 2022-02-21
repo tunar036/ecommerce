@@ -21,9 +21,9 @@ class Basket extends Model
         return $this->hasMany(BasketProduct::class);
     }
 
-    // public function user (){
-    //     return $this->belongsTo(User::class);
-    // }
+    public function user (){
+        return $this->belongsTo(User::class);
+    }
     public static function activeBasketId(){
         $active_basket = DB::table('basket as b')
         ->leftJoin('orders as o','o.basket_id','=','b.id')
