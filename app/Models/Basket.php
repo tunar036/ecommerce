@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
-use function PHPUnit\Framework\returnSelf;
 
 class Basket extends Model
 {
@@ -42,6 +40,7 @@ class Basket extends Model
 
     public function getBasketProductPiecesAttribute(){
         return DB::table('basket_product')->where('basket_id',$this->id)->sum('pieces');
+        // return BasketProduct::where('basket_id',$this->id)->sum('pieces');
     }
 
    

@@ -3,44 +3,46 @@
 @section('content')
 <div class="container">
         <div class="bg-content">
-            <h2>Sipariş (SP-00123)</h2>
+            <a href="{{route('orders')}}" class="btn btn-xs btn-primary">
+                <i class="glyphicon glyphicon-arrow-left"> Sifarişlərə dön</i>
+            </a>
+            <h2>Sipariş (SP-{{$order->id}})</h2>
             <table class="table table-bordererd table-hover">
                 <tr>
-                    <th>Ürün</th>
-                    <th>Tutar</th>
-                    <th>Adet</th>
-                    <th>Ara Toplam</th>
-                    <th>Durum</th>
+                    <th colspan="2">Məhsul</th>
+                    <th>Məbləğ</th>
+                    <th>Ədəd</th>
+                    <th>Cəmi</th>
+                    <th>Vəziyyət</th>
                 </tr>
+                @foreach($order->basket->basket_product as $basket_product)
                 <tr>
-                    <td> <img src="http://lorempixel.com/120/100/food/2"> Ürün adı</td>
-                    <td>18.99</td>
-                    <td>1</td>
-                    <td>18.99</td>
+                    <td style="width: 120px;"> 
+                        <a href="{{route('product',$basket_product->product->slug)}}">
+                            <img src="http://via.placeholder.com/120x100?text=Product Image"></td>
+                        </a>
                     <td>
-                        Sipariş alındı, <br> Onaylandı, <br> Kargoya verildi, <br> Bir sorun var. İletişime geçin!
+                        <a href="{{route('product',$basket_product->product->slug)}}">
+                            {{$basket_product->product->name}}
+                        </a>
                     </td>
+                    <td>{{$basket_product->price}} manat</td>
+                    <td>{{$basket_product->pieces}}</td>
+                    <td>{{$basket_product->price * $basket_product->pieces}} manat</td>
+                    <td>{{$basket_product->status}}</td>
+                </tr>
+                @endforeach
+                <tr>
+                    <th colspan="4" class="text-right">Cəmi Məbləğ</th>
+                    <td colspan="2">{{$order->order_amount}} manat</td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Toplam Tutar (KDV Dahil)</th>
-                    <th>18.99</th>
-                    <th></th>
+                    <th colspan="4" class="text-right">Cəmi Məbləğ (ƏDV ilə)</th>
+                    <td colspan="2">{{$order->order_amount * ((100+ config('cart.tax'))/100)}} manat</td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Kargo</th>
-                    <th>Ücretsiz</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Sipariş Toplamı</th>
-                    <th>18.99</th>
-                    <th></th>
+                    <th colspan="4" class="text-right">Məhsulun vəziyyəti</th>
+                    <td colspan="2">{{$order->status}}</td>
                 </tr>
 
             </table>

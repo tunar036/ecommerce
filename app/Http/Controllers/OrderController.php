@@ -13,6 +13,8 @@ class OrderController extends Controller
     }
 
     public function detail($id){
-        return $id;
+        $order = Order::with('basket.basket_product.product')->where('orders.id',$id)->firstOrFail();
+        return view('order',compact('order'));
+        // return $order;
     }
 }
