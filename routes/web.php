@@ -7,6 +7,7 @@ use App\Http\Controllers\BasketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::group(['prefix'=>'admin'],function(){
+    Route::get('/',function(){
+        return 'Admin';
+    });
+    Route::get('/login',[AdminUserController::class,'login'])->name('admin.login');
+});
 
 /* Route::get('/', function () {
     return view('welcome');
