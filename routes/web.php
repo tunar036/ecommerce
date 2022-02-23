@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\HomepageController as AdminHomepageController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::group(['prefix'=>'admin'],function(){
         return 'Admin';
     });
     Route::get('/login',[AdminUserController::class,'login'])->name('admin.login');
+    Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
 });
 
 /* Route::get('/', function () {
