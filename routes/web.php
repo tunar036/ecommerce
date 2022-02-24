@@ -24,10 +24,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix'=>'admin'],function(){
-    Route::get('/',function(){
-        return 'Admin';
-    });
-    Route::get('/login',[AdminUserController::class,'login'])->name('admin.login');
+    Route::redirect('/','/admin/login');
+    // Route::get('/login',[AdminUserController::class,'login_form'])->name('admin.login');
+    // Route::post('/login',[AdminUserController::class,'login']);
+    Route::match(['get','post'],'/login',[AdminUserController::class,'login'])->name('admin.login');
     Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
 });
 

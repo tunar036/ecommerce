@@ -11,8 +11,12 @@
 
 <body>
     <div class="container">
-        <form class="form-signin">
+        <form class="form-signin" action="{{route('admin.login')}}" method="POST">
+            @csrf
             <img src="/img/logo.png" class="logo">
+
+            @include('layouts.partials.errors')
+            
             <label for="email" class="sr-only">Email address</label>
             <input type="email" id="email" name="email" class="form-control" placeholder="Email" required autofocus>
             <label for="password" class="sr-only">Password</label>
