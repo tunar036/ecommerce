@@ -22,7 +22,7 @@ class UserController extends Controller
             $credentials = [
                 'email'=>request('email'),
                 'password'=>request('password'),
-                'is_admin'=>0
+                'is_admin'=>1
             ];
             if(Auth::guard('admin')->attempt($credentials,request()->has('remember_me')))
             {
@@ -31,5 +31,12 @@ class UserController extends Controller
             return back()->withInput()->withErrors(['email'=>'Email və ya şifrə düzgün deyil!']);
         }
         return view('admin.login');
+    }
+
+    public function logout (){
+        Auth::guard('admin')->logout();
+        request()->session()->flush();
+        request()->session()->regenerate();
+        return redirect()->route('admin.login');
     }
 }

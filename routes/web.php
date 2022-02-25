@@ -28,6 +28,7 @@ Route::group(['prefix'=>'admin'],function(){
     // Route::get('/login',[AdminUserController::class,'login_form'])->name('admin.login');
     // Route::post('/login',[AdminUserController::class,'login']);
     Route::match(['get','post'],'/login',[AdminUserController::class,'login'])->name('admin.login');
+    Route::get('/logout',[AdminUserController::class,'logout'])->name('admin.logout');
     Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
 });
 
