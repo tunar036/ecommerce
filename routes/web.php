@@ -29,7 +29,11 @@ Route::group(['prefix'=>'admin'],function(){
     // Route::post('/login',[AdminUserController::class,'login']);
     Route::match(['get','post'],'/login',[AdminUserController::class,'login'])->name('admin.login');
     Route::get('/logout',[AdminUserController::class,'logout'])->name('admin.logout');
-    Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
+
+    Route::group(['middleware'=>'admin'],function(){
+        Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
+
+    });
 });
 
 /* Route::get('/', function () {
