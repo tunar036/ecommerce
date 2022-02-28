@@ -1,5 +1,5 @@
 <div class="list-group">
-    <a href="#" class="list-group-item">
+    <a href="{{route('admin.homepage')}}" class="list-group-item">
         <span class="fa fa-fw fa-dashboard"></span> Dashboard</a>
     <a href="#" class="list-group-item">
         <span class="fa fa-fw fa-dashboard"></span> Products
@@ -10,7 +10,7 @@
     <a href="#" class="list-group-item">Category</a>
     <a href="#" class="list-group-item">Category</a>
     </div>
-    <a href="#" class="list-group-item">
+    <a href="{{route('admin.user')}}" class="list-group-item">
         <span class="fa fa-fw fa-dashboard"></span> Users
         <span class="badge badge-dark badge-pill pull-right">14</span>
     </a>

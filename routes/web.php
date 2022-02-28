@@ -33,6 +33,9 @@ Route::group(['prefix'=>'admin'],function(){
     Route::group(['middleware'=>'admin'],function(){
         Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
 
+        Route::prefix('user')->group(function () {
+            Route::match(['get','post'],'/',[AdminUserController::class,'index'])->name('admin.user');
+        });
     });
 });
 

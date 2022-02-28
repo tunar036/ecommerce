@@ -11,7 +11,7 @@ class UserController extends Controller
 {
 
 
-    public function login (){
+    public function login (){  
         // dd(request()->all());
         if(request()->isMethod('post')){
             $this->validate(request(),[
@@ -22,6 +22,7 @@ class UserController extends Controller
             $credentials = [
                 'email'=>request('email'),
                 'password'=>request('password'),
+                'is_active'=>1,
                 'is_admin'=>1
             ];
             if(Auth::guard('admin')->attempt($credentials,request()->has('remember_me')))
@@ -39,4 +40,10 @@ class UserController extends Controller
         request()->session()->regenerate();
         return redirect()->route('admin.login');
     }
+
+    public function index(){
+        $list = User::orderByDesc('created_at')->paginate(8);
+        return view('admin.user.index',compact('list'));
+    }
+
 }
