@@ -57,7 +57,8 @@ class UserController extends Controller
             $list = User::where('name','like',"%$search%")
             ->orWhere('email','like',"%$search%")
             ->orderByDesc('created_at')
-            ->paginate(8);
+            ->paginate(8)
+            ->appends('search',$search);
         }else{
         $list = User::orderByDesc('created_at')->paginate(8);
         }
