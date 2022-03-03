@@ -35,6 +35,10 @@ Route::group(['prefix'=>'admin'],function(){
 
         Route::prefix('user')->group(function () {
             Route::match(['get','post'],'/',[AdminUserController::class,'index'])->name('admin.user');
+            Route::get('/new',[AdminUserController::class,'new'])->name('admin.user.new');
+            Route::get('/edit/{id}',[AdminUserController::class,'edit'])->name('admin.user.edit');
+            Route::post('/update/{id}',[AdminUserController::class,'update'])->name('admin.user.update');
+            Route::post('/save',[AdminUserController::class,'save'])->name('admin.user.save');
         });
     });
 });

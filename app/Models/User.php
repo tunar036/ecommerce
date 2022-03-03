@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     use SoftDeletes;
     protected $table = 'user';
-    protected $fillable = ['name','email','password','activation_key','is_active','activation_key_send_date'];
+    protected $fillable = ['name','email','password','activation_key','is_active','is_admin','activation_key_send_date'];
 
 
     protected $hidden = ['password','activation_key'];
@@ -25,6 +25,6 @@ class User extends Authenticatable
     ];
 
     public function user_detail(){
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(UserDetail::class)->withDefault();
     }
 }
