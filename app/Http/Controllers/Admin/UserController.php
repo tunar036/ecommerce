@@ -50,7 +50,17 @@ class UserController extends Controller
 
     public function index()
     {
+        if(request()->filled('search'))
+        {
+            request()->flash();
+            $search = request('search');
+            $list = User::where('name','like',"%$search%")
+            ->orWhere('email','like',"%$search%")
+            ->orderByDesc('created_at')
+            ->paginate(8);
+        }else{
         $list = User::orderByDesc('created_at')->paginate(8);
+        }
         return view('admin.user.index', compact('list'));
     }
 

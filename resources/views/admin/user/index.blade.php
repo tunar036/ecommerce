@@ -2,12 +2,22 @@
 @section('title','User managment')
 @section('content')
 <h1 class="page-header">User management</h1>
-<h1 class="sub-header">
-    <div class="btn-group pull-right">
-        <a href="{{route('admin.user.new')}}" class="btn btn-primary">Create new user</a>
+<h3 class="sub-header">User List</h3>
+    <div class="well">
+        <div class="btn-group pull-right">
+            <a href="{{route('admin.user.new')}}" class="btn btn-primary">Create new user</a>
+        </div>
+        <form method="post" action="{{route('admin.user')}}" class="form-inline">
+            @csrf
+            <div class="form-group">
+                <label for="search">Search</label>
+                <input type="text" class="form-control form-control-sm" id="search" name="search" placeholder="Name ,email search"
+                value="{{old('search')}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="{{route('admin.user')}}" class="btn btn-primary">Clean</a>
+        </form>
     </div>
-    User List
-</h1>
 @include('layouts.partials.alert')
 <div class="table-responsive">
     <table class="table table-hover table-bordered">
