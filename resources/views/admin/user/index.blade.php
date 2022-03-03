@@ -8,6 +8,7 @@
     </div>
     User List
 </h1>
+@include('layouts.partials.alert')
 <div class="table-responsive">
     <table class="table table-hover table-bordered">
         <thead class="thead-dark">
@@ -46,7 +47,7 @@
                         <a href="{{route('admin.user.edit',$user->id)}}" class="btn btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="Edit">
                             <span class="fa fa-pencil"></span>
                         </a>
-                        <a href="#" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return confirm('Are you sure?')">
+                        <a href="{{route('admin.user.delete',$user->id)}}" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return confirm('Are you sure?')">
                             <span class="fa fa-trash"></span>
                         </a>
                     </td>

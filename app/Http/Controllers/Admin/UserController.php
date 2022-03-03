@@ -143,4 +143,12 @@ class UserController extends Controller
             ->with('message', "Created")
             ->with('message_type', 'success');
     }
+    public function delete($id)
+    {
+        User::destroy($id);
+        return redirect()
+        ->route('admin.user')
+        ->with('message','User deleted !')
+        ->with('message_type','success');
+    }
 }
