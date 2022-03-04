@@ -9,7 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\HomepageController as AdminHomepageController;
-
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +32,7 @@ Route::group(['prefix'=>'admin'],function(){
 
     Route::group(['middleware'=>'admin'],function(){
         Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
-
+            // Admin Panel User
         Route::prefix('user')->group(function () {
             Route::match(['get','post'],'/',[AdminUserController::class,'index'])->name('admin.user');
             Route::get('/new',[AdminUserController::class,'new'])->name('admin.user.new');
@@ -40,6 +40,15 @@ Route::group(['prefix'=>'admin'],function(){
             Route::post('/update/{id}',[AdminUserController::class,'update'])->name('admin.user.update');
             Route::post('/save',[AdminUserController::class,'save'])->name('admin.user.save');
             Route::get('/delete/{id}', [AdminUserController::class,'delete'])->name('admin.user.delete');
+        });
+            // Admin Panel Category 
+        Route::prefix('category')->group(function () {
+            Route::match(['get','post'],'/',[AdminCategoryController::class,'index'])->name('admin.category');
+            Route::get('/new',[AdminCategoryController::class,'new'])->name('admin.category.new');
+            Route::get('/edit/{id}',[AdminCategoryController::class,'edit'])->name('admin.category.edit');
+            Route::post('/update/{id}',[AdminCategoryController::class,'update'])->name('admin.category.update');
+            Route::post('/save',[AdminCategoryController::class,'save'])->name('admin.category.save');
+            Route::get('/delete/{id}', [AdminCategoryController::class,'delete'])->name('admin.category.delete');
         });
     });
 });
