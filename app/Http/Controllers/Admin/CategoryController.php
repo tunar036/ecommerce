@@ -18,12 +18,12 @@ class CategoryController extends Controller
         {
             request()->flash();
             $search = request('search');
-            $list = Category::where('name','like',"%$search%")
-            ->orderByDesc('created_at')
+            $list = Category::with('up_category')->where('name','like',"%$search%")
+            ->orderByDesc('id')
             ->paginate(8)
             ->appends('search',$search);
         }else{
-        $list = Category::orderByDesc('created_at')->paginate(8);
+        $list = Category::with('up_category')->orderByDesc('id')->paginate(8);
         }
         return view('admin.category.index', compact('list'));
     }
@@ -113,7 +113,7 @@ class CategoryController extends Controller
         $products_belonging_to_the_category = Category::find($id);
         $products_belonging_to_the_category->products()->detach();
         // //
-        
+
         $category = Category::where('id',$id)->first();
         $category->slug = null;
         $category->save();

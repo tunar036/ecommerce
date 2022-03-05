@@ -24,6 +24,7 @@
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
+                <th>Up Category</th>
                 <th>Slug</th>
                 <th>Category name</th>
                 <th>Created At</th>
@@ -34,6 +35,7 @@
             @foreach ($list as $category)         
                 <tr>
                     <td>{{$category->id}}</td>
+                    <td>{{$category->up_category->name}}</td>
                     <td>{{$category->slug}}</td>
                     <td>{{$category->name}}</td>
                     <td> {{$category->created_at->format('d/m/Y') }}</td>

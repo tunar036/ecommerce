@@ -18,4 +18,11 @@ class Category extends Model
     public function products (){
         return $this->belongsToMany(Product::class);
     }
+
+    public function up_category(){
+        return $this->belongsTo(Category::class,'up_id')->withDefault([
+            'name' =>'Main category'
+        ]);
+    }
+
 }
