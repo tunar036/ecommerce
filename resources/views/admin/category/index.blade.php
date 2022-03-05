@@ -13,6 +13,13 @@
                 <label for="search">Search</label>
                 <input type="text" class="form-control form-control-sm" id="search" name="search" placeholder="Category name"
                 value="{{old('search')}}">
+                <label for="up_id">Up category</label>
+                <select name="up_id" id="up_id" class="form-control">
+                    <option value="">Choose</option>
+                    @foreach ($up_categories as $up_category)
+                        <option value="{{$up_category->id}}" {{old('up_id') == $up_category->id ? 'selected' : ''}}>{{$up_category->name}}</option>
+                    @endforeach
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
             <a href="{{route('admin.category')}}" class="btn btn-primary">Clean</a>
@@ -32,6 +39,9 @@
             </tr>
         </thead>
         <tbody>
+            @if (count($list) == 0)
+            <tr><td colspan="6" class="text-center">Category not found !</td></tr>
+            @endif
             @foreach ($list as $category)         
                 <tr>
                     <td>{{$category->id}}</td>

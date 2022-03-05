@@ -14,20 +14,25 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        if(request()->filled('search'))
+        if(request()->filled('search') || request()->filled('up_id'))
         {
             request()->flash();
             $search = request('search');
-            $list = Category::with('up_category')->where('name','like',"%$search%")
+            $up_id = request('up_id');
+            $list = Category::with('up_category')
+            ->where('name','like',"%$search%")
+            ->where('up_id',$up_id)
             ->orderByDesc('id')
             ->paginate(8)
-            ->appends('search',$search);
+            ->appends(['search' => $search ,'up_id' => $up_id]);
         }else{
-        $list = Category::with('up_category')->orderByDesc('id')->paginate(8);
+            request()->flush();
+            $list = Category::with('up_category')->orderByDesc('id')->paginate(8);
         }
-        return view('admin.category.index', compact('list'));
+        $up_categories = Category::whereNull('up_id')->get();
+        return view('admin.category.index', compact('list','up_categories'));
     }
-
+    
     public function edit ($id)
     {
         $category = Category::findOrFail($id);

@@ -33,6 +33,9 @@
             </tr>
         </thead>
         <tbody>
+            @if (count($list) == 0)
+            <tr><td colspan="7" class="text-center">User not found !</td></tr>
+            @endif
             @foreach ($list as $user)         
                 <tr>
                     <td>{{$user->id}}</td>
