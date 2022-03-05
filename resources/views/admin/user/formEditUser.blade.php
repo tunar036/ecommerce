@@ -2,15 +2,15 @@
 @section('title','User edit Form')
 @section('content')
     <h1 class="page-header">User management</h1>
-    <form method="POST" action="{{isset($user) ? route('admin.user.update', $user->id) : route('admin.user.save')}}">
+    <form method="POST" action="{{route('admin.user.update', $user->id)}}">
         @csrf
 
         <div class="pull-right">
             <button type="submit" class="btn btn-primary">
-                {{isset($user) ? 'Update' : 'Save'}}
+                Update
             </button>
         </div>
-        <h2 class="sub-header">User {{isset($user) ? 'update' : 'create'}} form</h2>
+        <h2 class="sub-header">User update form</h2>
 
         @include('layouts.partials.errors')
         @include('layouts.partials.alert')
@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Name/surname</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name / Surname" value="{{old('name', $user->name)}}" name="name">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name / Surname" value="{{old('name', $user->name)}}" >
                 </div>
             </div>
             <div class="col-md-6">
