@@ -113,7 +113,8 @@ class CategoryController extends Controller
             ->with('message_type', 'success');
     }
 
-    public function delete ($id){
+    public function delete ($id)
+    {
         //Delete products belonging to the category 
         $products_belonging_to_the_category = Category::find($id);
         $products_belonging_to_the_category->products()->detach();

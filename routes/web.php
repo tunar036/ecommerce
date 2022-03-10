@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\HomepageController as AdminHomepageController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,15 @@ Route::group(['prefix'=>'admin'],function(){
             Route::post('/update/{id}',[AdminCategoryController::class,'update'])->name('admin.category.update');
             Route::post('/save',[AdminCategoryController::class,'save'])->name('admin.category.save');
             Route::get('/delete/{id}', [AdminCategoryController::class,'delete'])->name('admin.category.delete');
+        });
+            // Admin Panel Product
+        Route::prefix('product')->group(function(){
+            Route::match(['get','post'],'/',[AdminProductController::class,'index'])->name('admin.product');
+            Route::get('/new',[AdminProductController::class,'new'])->name('admin.product.new');
+            Route::get('/edit/{id}',[AdminProductController::class,'edit'])->name('admin.product.edit');
+            Route::post('/update/{id}',[AdminProductController::class,'update'])->name('admin.product.update');
+            Route::post('/save',[AdminProductController::class,'save'])->name('admin.product.save');
+            Route::get('/delete/{id}',[AdminProductController::class,'delete'])->name('admin.product.delete');
         });
     });
 });
