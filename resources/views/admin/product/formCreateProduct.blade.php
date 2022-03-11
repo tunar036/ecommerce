@@ -62,5 +62,35 @@
                 <input type="checkbox" value="1" name="show_discount" > show discount 
             </label>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="categories">Categories</label>
+                    <select name="categories[]" id="categories" class="js-example-basic-multiple form-control" multiple>
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
     </form>
+@endsection
+
+
+@section('head')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
+@section('footer')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(function(){
+            $('#categories').select2({
+                placeholder: 'Please select category'
+            });
+        })
+    </script>
 @endsection

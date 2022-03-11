@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use Exception;
@@ -29,14 +30,17 @@ class ProductController extends Controller
     }
 
     public function edit($id)
-    {
+    {   
         $product = Product::findOrFail($id);
-        return view('admin.product.formEditProduct',compact('product'));
+        $categories = Category::all();
+        $product_categories = $product->categories()->pluck('category_id')->all();
+        return view('admin.product.formEditProduct',compact('product','categories','product_categories'));
     }
 
     public function new ()
     {
-        return view('admin.product.formCreateProduct');
+        $categories = Category::all();
+        return view('admin.product.formCreateProduct',compact('categories'));
     }
 
     public function update($id)
@@ -61,6 +65,7 @@ class ProductController extends Controller
         $detail['show_discount'] = request()->has('show_discount') ? 1 : 0;
 
         $product = Product::where('id',$id)->firstOrFail();
+        $categories = request('categories');
         try {
             DB::beginTransaction();
             $product->update($data);
@@ -68,6 +73,8 @@ class ProductController extends Controller
                 ['product_id' => $product->id],
                     $detail
             );
+
+            $product->categories()->sync($categories);
 
             DB::commit();
             
@@ -88,6 +95,8 @@ class ProductController extends Controller
     
     public function save ()
     {
+
+        // dd(request()->all());
         // return request()->all();
         $this->validate(request(),[
             'name' => 'required',
@@ -106,6 +115,8 @@ class ProductController extends Controller
         $detail['show_featured'] = request()->has('show_featured') ? 1 : 0;
         $detail['show_bestselling'] = request()->has('show_bestselling') ? 1 : 0;
         $detail['show_discount'] = request()->has('show_discount') ? 1 : 0;
+
+        $categories = request('categories');
         try {
             DB::beginTransaction();
             $product = Product::create($data);
@@ -113,7 +124,11 @@ class ProductController extends Controller
             $detail['product_id'] = $product->id;
             
             ProductDetail::create($detail);
-                    DB::commit();
+
+            $product->categories()->attach($categories);
+            
+            
+            DB::commit();
             
         } catch (Exception $e) {
             DB::rollBack();
@@ -131,11 +146,12 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-        $product = Product::where('id',$id)->first();
+        $product = Product::find($id);
+        $product->categories()->detach();
+        //$product->detail()->delete();
         $product->slug = null;
         $product->save();
         $product->delete();
-        ProductDetail::where('product_id',$id)->first()->delete();
         return back()
         ->with('message','Product deleted !')
         ->with('message_type','success');
