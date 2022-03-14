@@ -91,6 +91,10 @@ class ProductController extends Controller
                 if($product_image->isValid())
                 {
                     $product_image->move('uploads/products',$file_name);
+                    ProductDetail::updateOrCreate(
+                        ['product_id'=>$product->id],
+                        ['product_image'=>$file_name]
+                    );
                 }
 
             }
@@ -161,6 +165,10 @@ class ProductController extends Controller
                 if($product_image->isValid())
                 {
                     $product_image->move('uploads/products',$file_name);
+                    ProductDetail::updateOrCreate(
+                        ['product_id'=>$product->id],
+                        ['product_image'=>$file_name]
+                    );
                 }
             }
             
