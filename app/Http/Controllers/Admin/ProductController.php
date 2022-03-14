@@ -58,11 +58,14 @@ class ProductController extends Controller
             $data['slug'] = Str::slug(request('name'));
         }
 
-        $detail['show_slider'] = request()->has('show_slider') ? 1 : 0;
-        $detail['show_opportunity'] = request()->has('show_opportunity') ? 1 : 0;
-        $detail['show_featured'] = request()->has('show_featured') ? 1 : 0;
-        $detail['show_bestselling'] = request()->has('show_bestselling') ? 1 : 0;
-        $detail['show_discount'] = request()->has('show_discount') ? 1 : 0;
+        $detail = [
+            'show_slider' =>request()->has('show_slider') ? 1 : 0,
+            'show_opportunity' =>request()->has('show_opportunity') ? 1 : 0,
+            'show_featured' =>request()->has('show_featured') ? 1 : 0,
+            'show_bestselling' =>request()->has('show_bestselling') ? 1 : 0,
+            'show_discount' =>request()->has('show_discount') ? 1 : 0,
+        ];
+
 
         $product = Product::where('id',$id)->firstOrFail();
         $categories = request('categories');
@@ -75,6 +78,22 @@ class ProductController extends Controller
             );
 
             $product->categories()->sync($categories);
+
+            if(request()->hasFile('product_image'))
+            {
+                $this->validate(request(),[
+                    'product_image' => 'image|mimes:jpg,png,jpeg,gif|max:2048'
+                ]);
+
+                $product_image = request()->file('product_image');
+                $file_name = $product->id . '-' . time() . '.' . $product_image->extension();
+
+                if($product_image->isValid())
+                {
+                    $product_image->move('uploads/products',$file_name);
+                }
+
+            }
 
             DB::commit();
             
@@ -110,13 +129,17 @@ class ProductController extends Controller
             $data['slug'] = Str::slug(request('name'));
         }
 
-        $detail['show_slider'] = request()->has('show_slider') ? 1 : 0;
-        $detail['show_opportunity'] = request()->has('show_opportunity') ? 1 : 0;
-        $detail['show_featured'] = request()->has('show_featured') ? 1 : 0;
-        $detail['show_bestselling'] = request()->has('show_bestselling') ? 1 : 0;
-        $detail['show_discount'] = request()->has('show_discount') ? 1 : 0;
+        $detail = [
+            'show_slider' =>request()->has('show_slider') ? 1 : 0,
+            'show_opportunity' =>request()->has('show_opportunity') ? 1 : 0,
+            'show_featured' =>request()->has('show_featured') ? 1 : 0,
+            'show_bestselling' =>request()->has('show_bestselling') ? 1 : 0,
+            'show_discount' =>request()->has('show_discount') ? 1 : 0,
+        ];
 
         $categories = request('categories');
+
+        
         try {
             DB::beginTransaction();
             $product = Product::create($data);
@@ -127,6 +150,19 @@ class ProductController extends Controller
 
             $product->categories()->attach($categories);
             
+            if(request()->hasFile('product_image'))
+            {
+                $this->validate(request(),[
+                    'product_image' =>'image|mimes:jpg,png,jpeg,gif|max:2048'
+                ]);
+                $product_image = request()->file('product_image');
+                $file_name = $product->id . '-' . time() . '.' . $product_image->extension();
+
+                if($product_image->isValid())
+                {
+                    $product_image->move('uploads/products',$file_name);
+                }
+            }
             
             DB::commit();
             

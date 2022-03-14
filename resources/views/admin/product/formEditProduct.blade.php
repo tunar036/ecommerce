@@ -2,7 +2,7 @@
 @section('title','Product edit Form')
 @section('content')
     <h1 class="page-header">Product management</h1>
-    <form method="POST" action="{{route('admin.product.update',$product->id)}}">
+    <form enctype="multipart/form-data" method="POST" action="{{route('admin.product.update',$product->id)}}">
         @csrf
 
         <div class="pull-right">
@@ -73,6 +73,10 @@
                     </select>
                 </div>
             </div>
+        </div>
+        <div class="form-group">
+            <label for="product_image"></label>
+            <input type="file" name="product_image" id="product_image">
         </div>
     </form>
 @endsection
