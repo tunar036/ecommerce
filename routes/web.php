@@ -25,14 +25,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix'=>'admin'],function(){
-    Route::redirect('/','/admin/login');
+   // Route::redirect('/','/admin/login');
     // Route::get('/login',[AdminUserController::class,'login_form'])->name('admin.login');
     // Route::post('/login',[AdminUserController::class,'login']);
     Route::match(['get','post'],'/login',[AdminUserController::class,'login'])->name('admin.login');
     Route::get('/logout',[AdminUserController::class,'logout'])->name('admin.logout');
 
     Route::group(['middleware'=>'admin'],function(){
-        Route::get('/homepage',[AdminHomepageController::class,'index'])->name('admin.homepage');
+        Route::get('/',[AdminHomepageController::class,'index'])->name('admin.homepage');
             // Admin Panel User
         Route::prefix('user')->group(function () {
             Route::match(['get','post'],'/',[AdminUserController::class,'index'])->name('admin.user');

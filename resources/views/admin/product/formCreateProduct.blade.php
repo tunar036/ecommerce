@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="product_image"></label>
+            <label for="product_image">Product Image</label>
             <input type="file" name="product_image" id="product_image">
         </div>
     </form>
@@ -88,12 +88,14 @@
 @endsection
 
 @section('footer')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(function(){
             $('#categories').select2({
                 placeholder: 'Please select category'
             });
+            CKEDITOR.replace('desc');
         })
     </script>
 @endsection

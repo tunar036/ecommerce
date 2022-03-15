@@ -12,9 +12,9 @@
         <div class="bg-content">
             <div class="row">
                 <div class="col-md-5">
-                    <img src="http://via.placeholder.com/400x200?text=Product Image">
+                    <img style="width: 400px" src="{{$product->detail->product_image != null ? asset('/uploads/products/'.$product->detail->product_image) : 'http://via.placeholder.com/400x200?text=Product Image'}}">
                     <hr>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-xs-3">
                             <a href="#" class="thumbnail"><img src="http://via.placeholder.com/60x60?text=Product Image"></a>
                         </div>
@@ -24,7 +24,7 @@
                         <div class="col-xs-3">
                             <a href="#" class="thumbnail"><img src="http://via.placeholder.com/60x60?text=Product Image"></a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-md-7">
                     <h1>{{$product->name}}</h1>

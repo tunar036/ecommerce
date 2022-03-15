@@ -37,6 +37,11 @@ class UserController extends Controller
             }
             return back()->withInput()->withErrors(['email' => 'Email və ya şifrə düzgün deyil!']);
         }
+
+        if (Auth::guard('admin')->user()) {
+            return redirect()->route('admin.homepage');
+        }
+
         return view('admin.login');
     }
 

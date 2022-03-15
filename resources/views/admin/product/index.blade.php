@@ -24,6 +24,7 @@
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
+                <th>Image</th>
                 <th>Slug</th>
                 <th>Product name</th>
                 <th>Price</th>
@@ -33,11 +34,14 @@
         </thead>
         <tbody>
             @if (count($list) == 0)
-            <tr><td colspan="6" class="text-center">Product not found !</td></tr>
+            <tr><td colspan="7" class="text-center">Product not found !</td></tr>
             @endif
-            @foreach ($list as $product)         
+            @foreach ($list as $product)          
                 <tr>
                     <td>{{$product->id}}</td>
+                    <td>
+                        <img src="{{$product->detail->product_image != null ? asset('/uploads/products/'.$product->detail->product_image) : 'http://via.placeholder.com/120x120/?text=Product Image'}}" alt="" style="width:120px">
+                    </td>
                     <td>{{$product->slug}}</td>
                     <td>{{$product->name}}</td>
                     <td>{{$product->price}}</td>

@@ -39,7 +39,7 @@
                     <div class="carousel-inner" role="listbox">
                         @foreach($product_slider as $index => $product)
                         <div class="item {{$index == 0 ? 'active' : ''}}">
-                            <img src="http://via.placeholder.com/640x400/?text=Product Image" alt="...">
+                            <img src="{{$product->detail->product_image!=null ? asset('/uploads/products/'.$product->detail->product_image) : 'http://via.placeholder.com/400x400/?text=Product Image'}}"  style="min-width: 100%" alt="...">
                             <div class="carousel-caption">
                                 {{$product->name}}
                             </div>
@@ -61,7 +61,7 @@
                     <div class="panel-heading">Günün Furseti</div>
                     <div class="panel-body">
                         <a href="{{route('product',$product_opportunity->slug)}}">
-                            <img src="http://via.placeholder.com/400x470/?text=Product Image" class="img-responsive">
+                            <img src="{{$product_opportunity->detail->product_image != null ? asset('/uploads/products/'.$product_opportunity->detail->product_image) : 'http://via.placeholder.com/400x485/?text=Product Image'}}" class="img-responsive" style="min-width: 100%">
                             {{$product_opportunity->name}}
                         </a>
                  
@@ -78,9 +78,9 @@
                     <div class="row">
                         @foreach($product_featured as $product)
                         <div class="col-md-3 product">
-                            <a href="{{route('product',$product->slug)}}"><img src="http://via.placeholder.com/400x400/?text=Product Image"></a>
+                            <a href="{{route('product',$product->slug)}}"><img src="{{$product->detail->product_image!=null ? asset('/uploads/products/'.$product->detail->product_image) : 'http://via.placeholder.com/400x400/?text=Product Image'}}"></a>
                             <p><a href="{{route('product',$product->slug)}}">{{$product->name}}</a></p>
-                            <p class="price">{{$product->price}} ₺</p>
+                            <p class="price">{{$product->price}} manat</p>
                         </div>
                         @endforeach
                     </div>
@@ -95,9 +95,9 @@
                     <div class="row">
                     @foreach($product_bestselling as $product)
                         <div class="col-md-3 product">
-                            <a href="{{route('product',$product->slug)}}"><img src="http://via.placeholder.com/400x400/?text=Product Image"></a>
+                            <a href="{{route('product',$product->slug)}}"><img src="{{$product->detail->product_image!=null ? asset('/uploads/products/'.$product->detail->product_image) : 'http://via.placeholder.com/400x400/?text=Product Image'}}"></a>
                             <p><a href="{{route('product',$product->slug)}}">{{$product->name}}</a></p>
-                            <p class="price">{{$product->price}} ₺</p>
+                            <p class="price">{{$product->price}} manat</p>
                         </div>
                     @endforeach
                     </div>
@@ -111,9 +111,9 @@
                     <div class="row">
                         @foreach($product_discount as $product)
                         <div class="col-md-3 product">
-                            <a href="{{route('product',$product->slug)}}"><img src="http://via.placeholder.com/400x400/?text=Product Image"></a>
+                            <a href="{{route('product',$product->slug)}}"><img src="{{$product->detail->product_image!=null ? asset('/uploads/products/'.$product->detail->product_image) : 'http://via.placeholder.com/400x400/?text=Product Image'}}"></a>
                             <p><a href="{{route('product',$product->slug)}}">{{$product->name}}</a></p>
-                            <p class="price">{{$product->price}} ₺</p>
+                            <p class="price">{{$product->price}} manat</p>
                         </div>
                         @endforeach
                     </div>

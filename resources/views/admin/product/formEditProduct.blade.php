@@ -75,7 +75,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="product_image"></label>
+            @if ($product->detail->product_image != null)
+                <img src="/uploads/products/{{$product->detail->product_image}}" alt="" style="width: 100px ; margin-right: 20px" class="thumbnail pull-left">
+            @endif
+            <label for="product_image">Product Image</label>
             <input type="file" name="product_image" id="product_image">
         </div>
     </form>
@@ -87,10 +90,14 @@
 @endsection
 
 @section('footer')
+    {{-- <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(function(){
-            $('#categories').select2();
-        })
+            $('#categories').select2({
+                placeholder: 'Please select category'
+            });
+            // CKEDITOR.replace('desc');
+        });
     </script>
 @endsection

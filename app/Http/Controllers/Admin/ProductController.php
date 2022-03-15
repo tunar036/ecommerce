@@ -52,7 +52,7 @@ class ProductController extends Controller
             'slug' => 'unique:product,slug,' . $id
         ]);
 
-        $data = request()->only('name','price','slug');
+        $data = request()->only('name','price','slug','desc');
         // dd($data);
         if(!request()->filled('slug')){
             $data['slug'] = Str::slug(request('name'));
