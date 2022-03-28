@@ -19,7 +19,7 @@
                 <tr>
                     <td style="width: 120px;"> 
                         <a href="{{route('product',$basket_product->product->slug)}}">
-                            <img src="http://via.placeholder.com/120x100?text=Product Image"></td>
+                            <img style="width:100px" src="{{$basket_product->product->detail->product_image != null ? asset('/uploads/products/'.$basket_product->product->detail->product_image) : 'http://via.placeholder.com/120x100?text=Product Image'}}"></td>
                         </a>
                     <td>
                         <a href="{{route('product',$basket_product->product->slug)}}">

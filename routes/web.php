@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\HomepageController as AdminHomepageController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +60,13 @@ Route::group(['prefix'=>'admin'],function(){
             Route::post('/update/{id}',[AdminProductController::class,'update'])->name('admin.product.update');
             Route::post('/save',[AdminProductController::class,'save'])->name('admin.product.save');
             Route::get('/delete/{id}',[AdminProductController::class,'delete'])->name('admin.product.delete');
+        });
+
+        Route::prefix('order')->group(function(){
+            Route::match(['get','post'],'/',[AdminOrderController::class,'index'])->name('admin.order');
+            Route::get('/new',[AdminOrderController::class,'new'])->name('admin.order.new');
+            Route::get('/edit/{id}',[AdminOrderController::class,'edit'])->name('admin.order.edit');
+            Route::get('/delete/{id}',[AdminOrderController::class,'delete'])->name('admin.order.delete');
         });
     });
 });
